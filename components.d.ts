@@ -8,5 +8,6 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     VanButton: typeof import('vant/es')['Button']
+    Xx: typeof import('./src/components/xx.vue')['default']
   }
 }
