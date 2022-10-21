@@ -13,7 +13,8 @@
     "axios": "^0.27.2",
     "reset.css": "^2.0.2",
     "vant": "^3.6.1",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.5"
   },
   "devDependencies": {
     "@types/node": "^18.7.14",

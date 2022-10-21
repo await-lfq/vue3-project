@@ -25,7 +25,7 @@ export default defineConfig({
     postcss: {
       plugins: [
         postCssPxToRem({
-          rootValue({ file }) { return file.indexOf('vant') !== -1 ? 37.5 : 75 }, // vant设计稿为375，其它设计稿为75
+          rootValue({ file }) { return file.indexOf('vant') !== -1 ? 37.5 : 75 }, // vant设计稿为375，其它设计稿为750
           propList: ['*'], // 需要转换的属性，这里选择全部都进行转换
         })
       ]
