@@ -3,7 +3,7 @@ interface stateType {
 };
 
 const state: stateType = {
-  userinfo: "lfq", // 用户信息
+  userinfo: null, // 用户信息
 };
 
 export default state
