@@ -3,7 +3,7 @@ import server from "@/axios/request";
 export function login(data = {}){
   return server({
     method: "post",
-    url: "",
+    url: "/user/login",
     data,
   })
 }

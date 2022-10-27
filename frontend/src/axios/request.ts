@@ -1,7 +1,7 @@
 import axios from "axios";
 // 创建axios实例
 const server = axios.create({
-  baseURL: "lfq",
+  baseURL: "http://localhost:2000",
   headers: {
     "Content-Type": "application/json;charset=utf-8"
   },

@@ -13,16 +13,16 @@ export default defineConfig({
       resolvers: [VantResolver()],
     }),
   ],
-  resolve: { // 配置src指向@
-    alias: [
+  resolve: {
+    alias: [ // 配置src指向@
       {
         find: '@',
         replacement: resolve(__dirname, './src'),
       }
     ]
   },
-  css: { // 移动端适配
-    postcss: {
+  css: {
+    postcss: { // 移动端适配
       plugins: [
         postCssPxToRem({
           rootValue({ file }) { return file.indexOf('vant') !== -1 ? 37.5 : 75 }, // vant设计稿为375，其它设计稿为750
@@ -31,4 +31,21 @@ export default defineConfig({
       ]
     }
   },
+  // server: {
+  //   open: true, // 自动在浏览器打开
+  //   proxy: { // 跨域代理
+  //     '/lfq': {
+  //       target: 'http://localhost:2000',
+  //       changeOrigin: true,
+  //       rewrite: (path) => path.replace(/^\/lfq/, '')
+  //     },
+
+  //   },
+  // }
+
+
 })
+
+
+
+

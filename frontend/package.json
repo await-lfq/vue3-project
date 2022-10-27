@@ -14,7 +14,8 @@
     "reset.css": "^2.0.2",
     "vant": "^3.6.1",
     "vue": "^3.2.37",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.5",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.14",
