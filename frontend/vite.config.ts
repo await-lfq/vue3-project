@@ -31,17 +31,17 @@ export default defineConfig({
       ]
     }
   },
-  // server: {
-  //   open: true, // 自动在浏览器打开
-  //   proxy: { // 跨域代理
-  //     '/lfq': {
-  //       target: 'http://localhost:2000',
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/lfq/, '')
-  //     },
+  server: {
+    open: true, // 自动在浏览器打开
+    // proxy: { // 跨域代理
+    //   '/lfq': {
+    //     target: 'http://localhost:2000',
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/lfq/, '')
+    //   },
 
-  //   },
-  // }
+    // },
+  }
 
 
 })

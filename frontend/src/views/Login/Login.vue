@@ -17,11 +17,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, getCurrentInstance } from "vue";
+import { reactive } from "vue";
 import { useStore } from "vuex";
 import { login } from "@/axios/login";
+import { showSuccess, showLoading, showFail } from "@/utils/tools";
 /* 用户信息相关逻辑 */
-const toast = (getCurrentInstance() as any).appContext.config.globalProperties.$toast;
+const store = useStore();
 const userInfo = reactive({
   username: "",
   password: "",
@@ -30,12 +31,9 @@ const rules = reactive({
   username: [{ message: '请输入用户名', required: true }],
   password: [{ message: '请输入密码', required: true }, { pattern: /^\d{6}/, message: '请输入正确的密码' }]
 });
+// 登录
 async function onSubmit(values: { username: string, password: string }) {
-  toast.loading({
-    message: '登陆中...',
-    forbidClick: true,
-    duration: 0,
-  });
+  showLoading("登陆中...")
   interface DataType {
     [property: string]: number | string | object[]
   }
@@ -46,9 +44,10 @@ async function onSubmit(values: { username: string, password: string }) {
     return
   }
   if (data.code === 0) {
-    toast.success(data.msg);
+    showSuccess(data.msg as string);
+    store.commit("setUserinfo", data.data);
   } else {
-    toast.fail(data.msg);
+    showFail(data.msg as string);
   }
 
 }

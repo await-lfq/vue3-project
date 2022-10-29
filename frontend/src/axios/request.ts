@@ -1,4 +1,5 @@
 import axios from "axios";
+import { showFail } from "@/utils/tools";
 // 创建axios实例
 const server = axios.create({
   baseURL: "http://localhost:2000",
@@ -17,6 +18,9 @@ server.interceptors.request.use(
 // 响应拦截器
 server.interceptors.response.use(
   res => res.data,
-  error => Promise.reject(error)
+  error => {
+    showFail("服务器出错")
+    return Promise.reject(error)
+  }
 )
 export default server

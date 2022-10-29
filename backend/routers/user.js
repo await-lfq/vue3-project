@@ -40,7 +40,6 @@ router.post("/login", urlencodedParser, express.json(), async (req, res) => {
     data: {
       token,
       username,
-      password
     }
   })
 
