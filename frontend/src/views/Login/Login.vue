@@ -21,8 +21,10 @@ import { reactive } from "vue";
 import { useStore } from "vuex";
 import { login } from "@/axios/login";
 import { showSuccess, showLoading, showFail } from "@/utils/tools";
-/* 用户信息相关逻辑 */
-const store = useStore();
+import { useRouter } from "vue-router"
+const store = useStore(); // store
+const router = useRouter(); // router
+// 登录信息
 const userInfo = reactive({
   username: "",
   password: "",
@@ -46,6 +48,7 @@ async function onSubmit(values: { username: string, password: string }) {
   if (data.code === 0) {
     showSuccess(data.msg as string);
     store.commit("setUserinfo", data.data);
+    router.push("/home");
   } else {
     showFail(data.msg as string);
   }

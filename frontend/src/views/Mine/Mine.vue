@@ -1,7 +1,7 @@
 <template>
   <div class="mine">
     <!--未登录 -->
-    <div v-if="false" class="no-login">
+    <div v-if="!userinfo" class="no-login">
       <van-empty description="未登录" />
       <van-grid class="grid-container" :column-num="2">
         <van-grid-item icon="star-o" text="收藏" />
@@ -13,7 +13,7 @@
       </van-cell-group>
     </div>
     <!-- 已登录 -->
-    <div class="login">
+    <div v-else class="login">
       <div class="header">
         <div class="mine-info">
           <van-image class="avatar" fit="cover" round width="100px" height="100px" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
@@ -47,16 +47,36 @@
         <van-cell title="消息通知" is-link />
         <van-cell title="小智同学" is-link />
       </van-cell-group>
-      <div class="footer">
-        退出登录
+      <div  class="footer">
+        <span @click="logout">退出登录</span>
       </div>
     </div>
   </div>
 </template>
 <script setup lang='ts'>
+import { computed } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { showModal, clearStorage } from "@/utils/tools";
+const store = useStore();// store
+const router = useRouter(); // router
+// 是否登录 
+const userinfo = computed(() => store.state.userinfo)
+// 退出登录
+async function logout() {
+  try {
+    await showModal("是否要退出登录");
+  } catch (error) {
+    return;
+  }
+  store.commit("setUserinfo", null);
+  clearStorage();
+  router.push("login");
+}
 </script>
 <style lang="scss" scoped>
 .mine {
+
   // 未登录
   .no-login {
     .grid-container {
@@ -65,29 +85,36 @@
       }
     }
   }
+
   // 已登录
   .login {
     .header {
       background: #1989fa;
       padding: 80px 0;
+
       .mine-info {
         display: flex;
         align-items: center;
+
         .avatar {
           margin: 0 18px 0 40px;
         }
+
         .name {
           margin-right: 200px;
           font-size: 30px;
           color: #fff;
         }
+
         .info-btn {
           color: #646566 !important;
         }
       }
+
       .count-container {
         display: flex;
         margin-top: 20px;
+
         .item {
           flex: 1 0 0;
           font-size: 30px;
@@ -98,11 +125,13 @@
         }
       }
     }
+
     .grid-container {
       :deep(.van-icon) {
         color: red;
       }
     }
+
     .footer {
       text-align: center;
       padding: 100px 0;
