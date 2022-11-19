@@ -9,7 +9,7 @@ router.post("/login", urlencodedParser, express.json(), async (req, res) => {
   const { username, password } = req.body;
   let data
   try {
-    data = await query(`SELECT * FROM user WHERE username="${username}"`);
+    data = await query(`select * from login where username="${username}"`);
   } catch (error) {
     console.log(error);
     return
@@ -44,4 +44,39 @@ router.post("/login", urlencodedParser, express.json(), async (req, res) => {
   })
 
 });
+// 用户信息接口
+router.get("/getUserinfo", async (req, res) => {
+  const { name } = req.query;
+  let data
+  try {
+    data = await query(`select * from userinfo where name='${name}'`)
+  } catch (error) {
+    console.log(error);
+    return
+  }
+  if (data.length === 0) { 
+    res.send({
+      code: 1,
+      msg: "没有该用户信息",
+      data: {},
+    })
+    return
+  }
+  if (data.length > 1) {
+    res.send({
+      code: 1,
+      msg: "该用户名字重复",
+      data: {},
+    })
+    return
+  }
+  res.send({
+    code: 0,
+    msg: "success",
+    data: {
+      ...data[0]
+    },
+  })
+
+})
 module.exports = router;

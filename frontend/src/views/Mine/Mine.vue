@@ -2,7 +2,7 @@
   <div class="mine">
     <!--未登录 -->
     <div v-if="!userinfo" class="no-login">
-      <van-empty description="未登录" />
+      <van-empty @click="router.push('/login')" description="未登录" />
       <van-grid class="grid-container" :column-num="2">
         <van-grid-item icon="star-o" text="收藏" />
         <van-grid-item icon="clock-o" text="历史" />
