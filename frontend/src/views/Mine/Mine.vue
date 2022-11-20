@@ -17,24 +17,24 @@
       <div class="header">
         <div class="mine-info">
           <van-image class="avatar" fit="cover" round width="100px" height="100px" :src="`https://fastly.jsdelivr.net${userinfo.image}`" />
-          <span class="name">{{userinfo.name}}</span>
+          <span class="name">{{                          userinfo.name                          }}</span>
           <van-button color="#fff" class="info-btn" round type="primary" size="mini">编辑资料</van-button>
         </div>
         <div class="count-container">
           <div class="item">
-            <span>{{userinfo.headlineCount}}</span>
+            <span>{{                          userinfo.headlineCount                          }}</span>
             <span>头条</span>
           </div>
           <div class="item">
-            <span>{{userinfo.attentionCount}}</span>
+            <span>{{                          userinfo.attentionCount                          }}</span>
             <span>关注</span>
           </div>
           <div class="item">
-            <span>{{userinfo.silkCount}}</span>
+            <span>{{                          userinfo.silkCount                          }}</span>
             <span>粉丝</span>
           </div>
           <div class="item">
-            <span>{{userinfo.praiseCount}}</span>
+            <span>{{                          userinfo.praiseCount                          }}</span>
             <span>获赞</span>
           </div>
         </div>
@@ -54,7 +54,7 @@
   </div>
 </template>
 <script setup lang='ts'>
-import { computed, onMounted, ref,Ref,UnwrapRef } from "vue";
+import { computed, onMounted, ref, Ref, UnwrapRef } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { showModal, clearStorage, showToast } from "@/utils/tools";
@@ -65,7 +65,7 @@ const router = useRouter(); // router
 interface UserinfoType {
   [property: string]: any
 }
-const userinfo:Ref<UnwrapRef<UserinfoType>>= ref<UserinfoType>({});
+const userinfo: Ref<UnwrapRef<UserinfoType>> = ref<UserinfoType>({});
 onMounted(async () => {
   interface ResType {
     [property: string]: any
@@ -77,7 +77,7 @@ onMounted(async () => {
     return
   }
   if (res.code === 0) {
-    userinfo.value = res.data 
+    userinfo.value = res.data
   } else {
     showToast(res.msg)
   }
@@ -85,7 +85,7 @@ onMounted(async () => {
 // 是否登录 
 const login = computed(() => store.state.userinfo)
 // 退出登录
-async function logout() {
+async function logout(): Promise<any> {
   try {
     await showModal("是否要退出登录");
   } catch (error) {
