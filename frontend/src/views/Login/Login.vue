@@ -37,7 +37,7 @@ const rules = reactive({
 async function onSubmit(values: { username: string, password: string }) {
   showLoading("登陆中...")
   interface DataType {
-    [property: string]: number | string | object[]
+    [property: string]: number | string | object
   }
   let data: DataType;
   try {

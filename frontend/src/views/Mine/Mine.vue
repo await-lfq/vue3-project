@@ -1,7 +1,7 @@
 <template>
   <div class="mine">
     <!--未登录 -->
-    <div v-if="!userinfo" class="no-login">
+    <div v-if="!login" class="no-login">
       <van-empty @click="router.push('/login')" description="未登录" />
       <van-grid class="grid-container" :column-num="2">
         <van-grid-item icon="star-o" text="收藏" />
@@ -16,25 +16,25 @@
     <div v-else class="login">
       <div class="header">
         <div class="mine-info">
-          <van-image class="avatar" fit="cover" round width="100px" height="100px" src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
-          <span class="name">lfq</span>
+          <van-image class="avatar" fit="cover" round width="100px" height="100px" :src="`https://fastly.jsdelivr.net${userinfo.image}`" />
+          <span class="name">{{userinfo.name}}</span>
           <van-button color="#fff" class="info-btn" round type="primary" size="mini">编辑资料</van-button>
         </div>
         <div class="count-container">
           <div class="item">
-            <span>6</span>
+            <span>{{userinfo.headlineCount}}</span>
             <span>头条</span>
           </div>
           <div class="item">
-            <span>7</span>
+            <span>{{userinfo.attentionCount}}</span>
             <span>关注</span>
           </div>
           <div class="item">
-            <span>12</span>
+            <span>{{userinfo.silkCount}}</span>
             <span>粉丝</span>
           </div>
           <div class="item">
-            <span>23</span>
+            <span>{{userinfo.praiseCount}}</span>
             <span>获赞</span>
           </div>
         </div>
@@ -54,14 +54,36 @@
   </div>
 </template>
 <script setup lang='ts'>
-import { computed } from "vue";
+import { computed, onMounted, ref,Ref,UnwrapRef } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { showModal, clearStorage } from "@/utils/tools";
+import { showModal, clearStorage, showToast } from "@/utils/tools";
+import { getUserInfo } from "@/axios/mine";
 const store = useStore();// store
 const router = useRouter(); // router
+// 获取用户信息
+interface UserinfoType {
+  [property: string]: any
+}
+const userinfo:Ref<UnwrapRef<UserinfoType>>= ref<UserinfoType>({});
+onMounted(async () => {
+  interface ResType {
+    [property: string]: any
+  }
+  let res: ResType;
+  try {
+    res = await getUserInfo({ name: store.state.userinfo.username })
+  } catch (error) {
+    return
+  }
+  if (res.code === 0) {
+    userinfo.value = res.data 
+  } else {
+    showToast(res.msg)
+  }
+})
 // 是否登录 
-const userinfo = computed(() => store.state.userinfo)
+const login = computed(() => store.state.userinfo)
 // 退出登录
 async function logout() {
   try {
