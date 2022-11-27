@@ -1,8 +1,9 @@
 import axios from "axios";
 import { showFail } from "@/utils/tools";
+import { getStorage } from "@/utils/tools";
 // 创建axios实例
 const server = axios.create({
-  baseURL: "http://localhost:2000",
+  baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     "Content-Type": "application/json;charset=utf-8"
   },
@@ -12,7 +13,12 @@ const server = axios.create({
 });
 // 请求拦截器
 server.interceptors.request.use(
-  config => config,
+  config => {
+    if (getStorage("userinfo")) {
+      (config as any).headers.Authorization = `bearer ${getStorage("userinfo").token}`
+    }
+    return config
+  },
   error => Promise.reject(error)
 )
 // 响应拦截器

@@ -16,25 +16,25 @@
     <div v-else class="login">
       <div class="header">
         <div class="mine-info">
-          <van-image class="avatar" fit="cover" round width="100px" height="100px" :src="`https://fastly.jsdelivr.net${userinfo.image}`" />
-          <span class="name">{{                          userinfo.name                          }}</span>
+          <van-image class="avatar" fit="cover" round width="100px" height="100px" :src="userinfo.image" />
+          <span class="name">{{ userinfo.name }}</span>
           <van-button color="#fff" class="info-btn" round type="primary" size="mini">编辑资料</van-button>
         </div>
         <div class="count-container">
           <div class="item">
-            <span>{{                          userinfo.headlineCount                          }}</span>
+            <span>{{ userinfo.headlineCount }}</span>
             <span>头条</span>
           </div>
           <div class="item">
-            <span>{{                          userinfo.attentionCount                          }}</span>
+            <span>{{ userinfo.attentionCount }}</span>
             <span>关注</span>
           </div>
           <div class="item">
-            <span>{{                          userinfo.silkCount                          }}</span>
+            <span>{{ userinfo.silkCount }}</span>
             <span>粉丝</span>
           </div>
           <div class="item">
-            <span>{{                          userinfo.praiseCount                          }}</span>
+            <span>{{ userinfo.praiseCount }}</span>
             <span>获赞</span>
           </div>
         </div>
@@ -54,7 +54,8 @@
   </div>
 </template>
 <script setup lang='ts'>
-import { computed, onMounted, ref, Ref, UnwrapRef } from "vue";
+import { computed, onMounted, ref } from "vue";
+import type { Ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { showModal, clearStorage, showToast } from "@/utils/tools";
@@ -65,7 +66,7 @@ const router = useRouter(); // router
 interface UserinfoType {
   [property: string]: any
 }
-const userinfo: Ref<UnwrapRef<UserinfoType>> = ref<UserinfoType>({});
+const userinfo: Ref<UserinfoType> = ref({});
 onMounted(async () => {
   interface ResType {
     [property: string]: any
@@ -77,7 +78,8 @@ onMounted(async () => {
     return
   }
   if (res.code === 0) {
-    userinfo.value = res.data
+    res.data.image = import.meta.env.VITE_IMG_URL + res.data.image
+    userinfo.value = res.data;
   } else {
     showToast(res.msg)
   }
@@ -112,19 +114,19 @@ async function logout(): Promise<any> {
   .login {
     .header {
       background: #1989fa;
-      padding: 80px 0;
+      padding: 40px 0;
 
       .mine-info {
         display: flex;
         align-items: center;
 
         .avatar {
-          margin: 0 18px 0 40px;
+          margin: 0 9px 0 20px;
         }
 
         .name {
-          margin-right: 200px;
-          font-size: 30px;
+          margin-right: 100px;
+          font-size: 15px;
           color: #fff;
         }
 
@@ -135,11 +137,11 @@ async function logout(): Promise<any> {
 
       .count-container {
         display: flex;
-        margin-top: 20px;
+        margin-top: 10px;
 
         .item {
           flex: 1 0 0;
-          font-size: 30px;
+          font-size: 15px;
           color: #fff;
           display: flex;
           flex-direction: column;
@@ -156,9 +158,9 @@ async function logout(): Promise<any> {
 
     .footer {
       text-align: center;
-      padding: 100px 0;
+      padding: 50px 0;
       color: red;
-      font-size: 30px;
+      font-size: 15px;
     }
   }
 }
