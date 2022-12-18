@@ -16,6 +16,10 @@
       <van-tab title="标签 6">内容 6</van-tab>
       <van-tab title="标签 7">内容 7</van-tab>
       <van-tab title="标签 8">内容 8</van-tab>
+      <template #nav-right>
+        <i class="placeholder"></i>
+        <van-icon name="wap-nav"></van-icon>
+      </template>
     </van-tabs>
   </div>
 </template>
@@ -58,6 +62,25 @@ const active: Ref<number> = ref(0)
     :deep(.van-tab--active) {
       color: red;
     }
+
+    :deep(.van-badge__wrapper) {
+      position: fixed;
+      right: 0;
+      top: 46px;
+      width: 39px;
+      height: 43px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      opacity: 0.9;
+    }
+    .placeholder {
+      width: 39px;
+      height: 43px;
+      flex-shrink: 0;
+    }
+
   }
 }
 </style>
